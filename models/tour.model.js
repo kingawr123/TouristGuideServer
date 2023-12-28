@@ -1,6 +1,5 @@
 module.exports = mongoose => {
     var tourSchema = mongoose.Schema({
-        id: Number,
         name: {
            type: String,
            required: true
@@ -12,6 +11,10 @@ module.exports = mongoose => {
         price: Number,
         maxPeople: Number,
         imageUrl: String,
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
      });
 
     tourSchema.method("toJSON", function() {

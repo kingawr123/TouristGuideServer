@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Tour = db.tours;
 
@@ -72,8 +73,9 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
     const id = req.params.id;
+    id: ObjectId = ObjectId(id);
     
-    Tour.findByIdAndRemove(id)
+    Tour.findOneAndDelete(id)
         .then(tour => {
             if (!tour) {
                 return res.status(404).json({ msg: 'Nie znaleziono wycieczki o podanym id' });
