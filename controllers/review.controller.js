@@ -3,8 +3,8 @@ const db = require("../models");
 const Review = db.reviews;
 
 exports.create = (req, res) => {
-    const id = req.params.id;
-    id = ObjectId(id);
+    var id = req.params.id;
+    id = new ObjectId(id);
     if (!req.body.username) {
         return res.status(400).json({ msg: 'Nazwa nie może być pusta' });
     }

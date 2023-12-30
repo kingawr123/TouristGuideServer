@@ -8,6 +8,8 @@ module.exports = app => {
     router.get('/', tours.findAll);
     
     router.get('/:id', tours.findOne);
+
+    router.get('/:id/rating', tours.findTourRating);
     
     router.put('/:id', tours.update);
     
