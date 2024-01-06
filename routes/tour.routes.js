@@ -10,6 +10,12 @@ module.exports = app => {
     router.get('/:id', tours.findOne);
 
     router.get('/:id/rating', tours.findTourRating);
+
+    router.get('/:id/reviews', tours.findTourReservations);
+
+    router.get('/:id/reservations', tours.findTourReservations);
+
+    router.get('/freeSpots', tours.getToursNumberOfReservedSpots);
     
     router.put('/:id', tours.update);
     

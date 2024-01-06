@@ -81,8 +81,8 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    id: ObjectId = ObjectId(id);
+    var id = req.params.id;
+    id = new ObjectId(id);
     
     Review.findOneAndDelete(id)
         .then(review => {

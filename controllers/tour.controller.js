@@ -2,6 +2,34 @@ const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Tour = db.tours;
 const Review = db.reviews;
+const Reservation = db.reservations;
+
+// get reservations for tour
+exports.findTourReservations = (req, res) => {
+    var id = req.params.id;
+    id = new ObjectId(id);
+
+    Reservation.find({tour: id})
+        .then(reservations => {
+            return res.json(reservations);
+        })
+        .catch(err => {
+            return res.status(500).json({ msg: 'Błąd serwera' });
+        })
+}
+
+// get number of reserved spots for all tours
+exports.getToursNumberOfReservedSpots = (req, res) => {
+    Reservation.aggregate([
+        { $group: { _id: "$tourId", reservedSpots: { $sum: "$reservedSpots" } } }
+    ])
+        .then(data => {
+            return res.json(data);
+        })
+        .catch(err => {
+            return res.status(500).json({ msg: 'Błąd serwera' });
+        })
+}
 
 
 exports.findTourRating = (req, res) => {
@@ -18,22 +46,6 @@ exports.findTourRating = (req, res) => {
         .catch(err => {
             return res.status(500).json({ msg: 'Błąd serwera' });
         })
-
-
-
-    // var id = req.params.id;
-    // id = new ObjectId(id);
-
-    // Review.aggregate([
-    //     { $match: { tour: id } },
-    //     { $group: { _id: null, avgRating: { $avg: "$rating" } } }
-    // ])
-    //     .then(data => {
-    //         return res.json(data);
-    //     })
-    //     .catch(err => {
-    //         return res.status(500).json({ msg: 'Błąd serwera' });
-    //     })
 }
 
 
