@@ -4,10 +4,27 @@ const Tour = db.tours;
 const Review = db.reviews;
 const Reservation = db.reservations;
 
-// get reservations for tour
+// get info about all reservations for tour
+exports.findTourReservationsInfo = (req, res) => {
+    var id = req.params.id;
+    id = new ObjectId(id);
+    Reservation.aggregate([
+        { $match: { tourId: id } },
+        { $group: { _id: null, reservedSpots: { $sum: "$reservedSpots" } } }
+    ])
+    .then(data => {
+        return res.json(data);
+    })
+    .catch(err => {
+        return res.status(500).json({ msg: 'Błąd serwera' });
+     })
+}
+
+
+// get all reservations for tour
 exports.findTourReservations = (req, res) => {
     var id = req.params.id;
-
+    id = new ObjectId(id);
     Reservation.find({tourId: id})
         .then(reservations => {
             return res.json(reservations);

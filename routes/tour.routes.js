@@ -16,6 +16,8 @@ module.exports = app => {
     // działa
     router.get('/:id/reservations', tours.findTourReservations);
 
+    router.get('/:id/reservationsinfo', tours.findTourReservationsInfo);
+
     // nie działa
     router.get('/reservedspots', tours.getToursNumberOfReservedSpots);
     
