@@ -13,9 +13,11 @@ module.exports = app => {
 
     router.get('/:id/reviews', tours.findTourReservations);
 
+    // działa
     router.get('/:id/reservations', tours.findTourReservations);
 
-    router.get('/freeSpots', tours.getToursNumberOfReservedSpots);
+    // nie działa
+    router.get('/reservedspots', tours.getToursNumberOfReservedSpots);
     
     router.put('/:id', tours.update);
     

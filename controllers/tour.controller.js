@@ -7,9 +7,8 @@ const Reservation = db.reservations;
 // get reservations for tour
 exports.findTourReservations = (req, res) => {
     var id = req.params.id;
-    id = new ObjectId(id);
 
-    Reservation.find({tour: id})
+    Reservation.find({tourId: id})
         .then(reservations => {
             return res.json(reservations);
         })
@@ -21,7 +20,7 @@ exports.findTourReservations = (req, res) => {
 // get number of reserved spots for all tours
 exports.getToursNumberOfReservedSpots = (req, res) => {
     Reservation.aggregate([
-        { $group: { _id: "$tourId", reservedSpots: { $sum: "$reservedSpots" } } }
+        { $group: { _id: null, tourId: "$tourId", reservedSpots: { $sum: "$reservedSpots" } } }
     ])
         .then(data => {
             return res.json(data);
@@ -38,7 +37,7 @@ exports.findTourRating = (req, res) => {
     
     Review.aggregate([
         { $match: { tour: id } },
-        { $group: { _id: null, avgRating: { $avg: "$rating" } } }
+        { $group: { _id: null, avgRating: { $avg: "$rating" }, count: { $sum: 1} } }
     ])
         .then(data => {
             return res.json(data);
