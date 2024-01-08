@@ -48,7 +48,9 @@ exports.create = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    const id = req.params.id;
+    var id = req.params.id;
+    id = new ObjectId(id);
+
     if (!req.body.totalPrice) {
         return res.status(400).json({ msg: 'Brak ceny' });
     }
@@ -57,7 +59,11 @@ exports.update = (req, res) => {
         return res.status(400).json({ msg: 'Brak ilości miejsc' });
     }
 
-    Reservation.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Reservation.updateOne({_id: id}, {
+        totalPrice: req.body.totalPrice,
+        reservedSpots: req.body.reservedSpots,
+        updatedAt: Date.now()
+    })
         .then(data => {
             if (!data) {
                 return res.status(404).json({ msg: 'Nie znaleziono rezerwacji o podanym id' });
@@ -67,14 +73,13 @@ exports.update = (req, res) => {
         .catch(err => {
             return res.status(500).json({ msg: 'Błąd serwera' });
         })
-    
 }
 
 exports.delete = (req, res) => {
     var id = req.params.id;
     id = new ObjectId(id);
 
-    Reservation.findByIdAndRemove(id)
+    Reservation.findOneAndDelete(id)
         .then(data => {
             if (!data) {
                 return res.status(404).json({ msg: 'Nie znaleziono rezerwacji o podanym id' });

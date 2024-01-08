@@ -5,7 +5,6 @@ module.exports = app => {
     
     router.post('/:id', reservations.create);
 
-    // działa reszta nie wiem
     router.get('/:id', reservations.findAll);
         
     router.put('/:id', reservations.update);

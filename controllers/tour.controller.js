@@ -135,8 +135,17 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    id: ObjectId = ObjectId(id);
+    var id = req.params.id;
+    id = new ObjectId(id);
+
+    // have to delete all reservations made for this tour
+    Reservation.deleteMany({tourId: id})
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            return res.status(500).json({ msg: 'Błąd serwera' });
+        })
     
     Tour.findOneAndDelete(id)
         .then(tour => {
