@@ -90,3 +90,13 @@ exports.delete = (req, res) => {
             return res.status(500).json({ msg: 'Błąd serwera' });
         })
 }
+
+exports.deleteAll = (req, res) => {
+    Reservation.deleteMany({})
+        .then(data => {
+            return res.json({ msg: 'Wszystkie rezerwacje zostały usunięte' });
+        })
+        .catch(err => {
+            return res.status(500).json({ msg: 'Błąd serwera' });
+        })
+}

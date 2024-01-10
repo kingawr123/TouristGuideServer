@@ -21,7 +21,7 @@ module.exports = app => {
     // nie działa
     router.get('/reservedspots', tours.getToursNumberOfReservedSpots);
     
-    router.put('/:id', tours.update);
+    router.put('/:id', tours.updateAvailableSpots);
     
     router.delete('/:id', tours.delete);
     

@@ -115,7 +115,7 @@ exports.findOne = (req, res) => {
         })
 }
 
-exports.update = (req, res) => {
+exports.updateAvailableSpots = (req, res) => {
     if (!req.body) {
         return res.status(400).json({ msg: 'Brak danych do aktualizacji' });
     }

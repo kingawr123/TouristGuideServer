@@ -10,6 +10,8 @@ module.exports = app => {
     router.put('/:id', reservations.update);
     
     router.delete('/:id', reservations.delete);
+
+    router.delete('/', reservations.deleteAll);
     
     app.use('/api/reservations', router);
 }
